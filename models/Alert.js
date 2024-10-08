@@ -1,16 +1,22 @@
-const { DataTypes } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../sequelize');
 
-const Alert = sequelize.define('Alert', {
-    id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
+class Alert extends Model {}
+
+Alert.init(
+    {
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
+            defaultValue: DataTypes.UUIDV4,
+        },
     },
-    message: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-});
+    {
+        sequelize,
+        modelName: 'Alert',
+        tableName: 'alert',
+        timestamps: false,
+    }
+);
 
 module.exports = Alert;
