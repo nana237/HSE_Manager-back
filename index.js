@@ -1,12 +1,20 @@
-const http = require('http');
+// index.js
+const sequelize = require('./sequalize'); // Ensure you are importing sequelize correctly
+const express = require('express');
+const app = express();
+const port = 3000;
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello, World!\n');
+app.get('/ping', async (req, res) => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+    res.send('Database connection successful!');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+    res.status(500).send('Database connection failed!');
+  }
 });
 
-const PORT = 3000;
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
 });
