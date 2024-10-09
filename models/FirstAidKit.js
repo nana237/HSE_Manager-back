@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../sequelize');
+const Company = require("./Company");
 
 class FirstAidKit extends Model {}
 
@@ -9,6 +10,10 @@ FirstAidKit.init(
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
+        },
+        company_id: {
+            type: DataTypes.UUID,
+            allowNull: false,
         },
         name: {
             type: DataTypes.STRING,
@@ -22,5 +27,7 @@ FirstAidKit.init(
         timestamps: false,
     }
 );
+
+FirstAidKit.belongsTo(Company, { foreignKey: 'company_id' });
 
 module.exports = FirstAidKit;

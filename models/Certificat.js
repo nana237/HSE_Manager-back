@@ -1,11 +1,10 @@
-const {Model, DataTypes} = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../sequelize');
 const Company = require('../models/Company');
 
-class Equipment extends Model {
-}
+class Certificat extends Model {}
 
-Equipment.init(
+Certificat.init(
     {
         id: {
             type: DataTypes.UUID,
@@ -16,35 +15,31 @@ Equipment.init(
             type: DataTypes.UUID,
             allowNull: false,
         },
-        type: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        model: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        dateInstallation: {
-            type: DataTypes.DATEONLY,
+        employee_name: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
-        dateVerification: {
-            type: DataTypes.DATEONLY,
+        certification_data: {
+            type: DataTypes.DATE,
             allowNull: false,
         },
+        organism: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        }
     },
     {
         sequelize,
-        modelName: 'Equipment',
-        tableName: 'equipment',
+        modelName: 'Certificat',
+        tableName: 'certificat',
         timestamps: false,
     }
 );
 
-Equipment.belongsTo(Company, {foreignKey: 'company_id'});
+Certificat.belongsTo(Company, { foreignKey: 'company_id' });
 
-module.exports = Equipment;
+module.exports = Certificat;
