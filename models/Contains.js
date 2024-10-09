@@ -1,5 +1,5 @@
 const {Model, DataTypes} = require('sequelize');
-const sequelize = require('../sequelize');
+const sequelize = require('../config/sequelize');
 const FirstAidKit = require('./FirstAidKit');
 const FirstAidKitItem = require('./FirstAidKitItem');
 
