@@ -15,6 +15,10 @@ FirstAidKitItem.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        link: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
     },
     {
         sequelize,
@@ -24,7 +28,7 @@ FirstAidKitItem.init(
     }
 );
 
+FirstAidKitItem.belongsToMany(FirstAidKit, { through: 'Contains' });
 FirstAidKit.hasMany(FirstAidKitItem, { foreignKey: 'kitId', onDelete: 'CASCADE' });
-FirstAidKitItem.belongsTo(FirstAidKit, { foreignKey: 'kitId' });
 
 module.exports = FirstAidKitItem;
