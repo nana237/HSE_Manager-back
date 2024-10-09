@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../sequelize');
+const sequelize = require('../config/sequelize');
+const Company = require("./Company");
 
 class Alert extends Model {}
 
@@ -18,5 +19,7 @@ Alert.init(
         timestamps: false,
     }
 );
+
+Alert.belongsTo(Company, {foreignKey: 'company_id'});
 
 module.exports = Alert;

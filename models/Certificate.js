@@ -1,10 +1,11 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../sequelize');
+const sequelize = require('../config/sequelize');
 const Company = require('../models/Company');
 
-class Certificat extends Model {}
+class Certificate extends Model {
+}
 
-Certificat.init(
+Certificate.init(
     {
         id: {
             type: DataTypes.UUID,
@@ -23,7 +24,7 @@ Certificat.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        certification_data: {
+        certification_date: {
             type: DataTypes.DATE,
             allowNull: false,
         },
@@ -34,12 +35,12 @@ Certificat.init(
     },
     {
         sequelize,
-        modelName: 'Certificat',
-        tableName: 'certificat',
+        modelName: 'Certificate',
+        tableName: 'certificate',
         timestamps: false,
     }
 );
 
-Certificat.belongsTo(Company, { foreignKey: 'company_id' });
+Certificate.belongsTo(Company, {foreignKey: 'company_id'});
 
-module.exports = Certificat;
+module.exports = Certificate;

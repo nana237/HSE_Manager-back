@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../sequelize');
+const sequelize = require('../config/sequelize');
 
 class Company extends Model {}
 
@@ -24,7 +24,8 @@ Company.init(
         },
         nb_employees: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            defaultValue: 1,
+            allowNull: true,
         }
     },
     {
