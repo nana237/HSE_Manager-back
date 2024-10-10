@@ -1,0 +1,694 @@
+{
+  "info": {
+    "_postman_id": "fefc16a4-43b9-45bb-8efc-17d02173cbb0",
+    "name": "HSE Manager",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29794704"
+  },
+  "item": [
+    {
+      "name": "Company",
+      "item": [
+        {
+          "name": "Create Company",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"test2\",\r\n    \"mail\": \"test2@gmail.com\",\r\n    \"password\": \"1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/company/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "company",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Companies [FOR TESTING]",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/company/get",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "company",
+                "get"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Company",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/company/update/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "company",
+                "update",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"mail\": \"user@gmail.com\",\r\n    \"password\": \"1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/company/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "company",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Equipment",
+      "item": [
+        {
+          "name": "GET All equipment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/equipment/:company_id/get-all",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "equipment",
+                ":company_id",
+                "get-all"
+              ],
+              "variable": [
+                {
+                  "key": "company_id",
+                  "value": "40e184d5-30b4-4ce7-a211-1d1c408598f7"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Equipment by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/equipment/:company_id/get/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "equipment",
+                ":company_id",
+                "get",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "company_id",
+                  "value": "40e184d5-30b4-4ce7-a211-1d1c408598f7"
+                },
+                {
+                  "key": "id",
+                  "value": "7e863103-72b5-4a21-ad73-3451b29c9966"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Equipment Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"type\": \"Type_Test\",\r\n    \"model\": \"Model_Test\",\r\n    \"name\": \"Equipment Company 2\",\r\n    \"dateInstallation\": \"2023-05-10\",\r\n    \"dateVerification\": \"2023-05-10\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/equipment/:company_id/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "equipment",
+                ":company_id",
+                "create"
+              ],
+              "variable": [
+                {
+                  "key": "company_id",
+                  "value": "0bf11147-82d6-4dd4-95bf-4a369d5b9f3c"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT an equipment",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"type\": \"Type_Test\",\r\n    \"model\": \"Model_Test\",\r\n    \"name\": \"Equipment Company 2\",\r\n    \"dateInstallation\": \"2023-05-10\",\r\n    \"dateVerification\": \"2023-05-10\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/equipment/:company_id/delete/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "equipment",
+                ":company_id",
+                "delete",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "company_id",
+                  "value": "40e184d5-30b4-4ce7-a211-1d1c408598f7"
+                },
+                {
+                  "key": "id",
+                  "value": "7e863103-72b5-4a21-ad73-3451b29c9966"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Update Equipment",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"type\": \"Type_Test\",\r\n    \"model\": \"Model_Test\",\r\n    \"name\": \"Equipment Company 2\",\r\n    \"dateInstallation\": \"2023-05-10\",\r\n    \"dateVerification\": \"2023-05-10\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/equipment/:company_id/update/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "equipment",
+                ":company_id",
+                "update",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "company_id",
+                  "value": ""
+                },
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "First Aid Kit",
+      "item": [
+        {
+          "name": "GET all first-aids",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/first-aid/:company_id/get-all",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "first-aid",
+                ":company_id",
+                "get-all"
+              ],
+              "variable": [
+                {
+                  "key": "company_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET a first-aid kit by Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/first-aid/:company_id/get/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "first-aid",
+                ":company_id",
+                "get",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "company_id",
+                  "value": ""
+                },
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST a first-aid kit",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Trousse de secours 1\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/first-aid/:company_id/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "first-aid",
+                ":company_id",
+                "create"
+              ],
+              "variable": [
+                {
+                  "key": "company_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST an item in first aid kit",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Item 1\",\r\n    \"link\": \"http://link\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/first-aid/:company_id/item/create/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "first-aid",
+                ":company_id",
+                "item",
+                "create",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "company_id",
+                  "value": ""
+                },
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT an item in first aid kit",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Item 1\",\r\n    \"link\": \"http://link\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/first-aid/:company_id/item/update/:kitId/:itemId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "first-aid",
+                ":company_id",
+                "item",
+                "update",
+                ":kitId",
+                ":itemId"
+              ],
+              "variable": [
+                {
+                  "key": "company_id",
+                  "value": ""
+                },
+                {
+                  "key": "kitId",
+                  "value": ""
+                },
+                {
+                  "key": "itemId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE an item in first aid kit",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Item 1\",\r\n    \"link\": \"http://link\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/first-aid/:company_id/item/delete/:kitId/:itemId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "first-aid",
+                ":company_id",
+                "item",
+                "delete",
+                ":kitId",
+                ":itemId"
+              ],
+              "variable": [
+                {
+                  "key": "company_id",
+                  "value": ""
+                },
+                {
+                  "key": "kitId",
+                  "value": ""
+                },
+                {
+                  "key": "itemId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Certificate",
+      "item": [
+        {
+          "name": "GET a certificate",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/certificate/:company_id/get/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "certificate",
+                ":company_id",
+                "get",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "company_id",
+                  "value": ""
+                },
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST a certificate",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Certificate name\",\r\n    \"employee_name\": \"Jean Guedin\",\r\n    \"certification_date\": \"2012-04-23T18:25:43.511Z\",\r\n    \"organism\": \"Organisme de santé lah\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/certificate/:company_id/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "certificate",
+                ":company_id",
+                "create"
+              ],
+              "variable": [
+                {
+                  "key": "company_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE a certificate",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/certificate/delete/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "certificate",
+                "delete",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Alert",
+      "item": [
+        {
+          "name": "GET all alerts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/alert/get-all",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "alert",
+                "get-all"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "GET Ping",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/ping",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "ping"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

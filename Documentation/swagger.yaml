@@ -1,0 +1,652 @@
+openapi: 3.0.0
+info:
+  title: Company API
+  version: 1.0.0
+  description: API documentation for the Company model
+servers:
+  - url: 'http://localhost:3000'
+tags:
+  - name: Company
+    description: Company management
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: [ ]
+
+paths:
+  /company/create:
+    post:
+      summary: Create a new company
+      tags:
+        - Company
+      requestBody:
+        description: The company details to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Acme Corp
+                mail:
+                  type: string
+                  example: acme@example.com
+                password:
+                  type: string
+                  example: MyPassword123
+      responses:
+        '200':
+          description: Company created successfully
+        '500':
+          description: Error creating company
+
+  /company/get:
+    get:
+      summary: Get all companies
+      tags:
+        - Company
+      responses:
+        '200':
+          description: List of companies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: Acme Corp
+                    mail:
+                      type: string
+                      example: acme@example.com
+                    nb_employees:
+                      type: integer
+                      example: 50
+        '404':
+          description: No companies found
+
+  /company/{id}:
+    put:
+      summary: Update a company by ID
+      tags:
+        - Company
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The company ID to update
+      requestBody:
+        description: The company details to update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Acme Corp
+                mail:
+                  type: string
+                  example: acme@example.com
+                password:
+                  type: string
+                  example: NewPassword123
+                nb_employees:
+                  type: integer
+                  example: 100
+      responses:
+        '200':
+          description: Company updated successfully
+        '404':
+          description: Company not found
+
+  /company/login:
+    post:
+      summary: Company login
+      tags:
+        - Company
+      requestBody:
+        description: Company login details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mail:
+                  type: string
+                  example: acme@example.com
+                password:
+                  type: string
+                  example: MyPassword123
+      responses:
+        '200':
+          description: Login successful, returns JWT token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+        '400':
+          description: Invalid email or password
+        '500':
+          description: Server error
+  /equipment/{company_id}/get-all:
+    get:
+      summary: Get all equipment for a company
+      tags:
+        - Equipment
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - in: path
+          name: company_id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the company
+      responses:
+        '200':
+          description: List of equipment
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    type:
+                      type: string
+                      example: Safety Equipment
+                    model:
+                      type: string
+                      example: Model-X
+                    name:
+                      type: string
+                      example: Fire Extinguisher
+                    dateInstallation:
+                      type: string
+                      format: date
+                      example: '2023-01-15'
+                    dateVerification:
+                      type: string
+                      format: date
+                      example: '2024-01-15'
+        '403':
+          description: Unauthorized
+        '404':
+          description: No company or equipment found
+
+  /equipment/{company_id}/get/{id}:
+    get:
+      summary: Get specific equipment for a company
+      tags:
+        - Equipment
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - in: path
+          name: company_id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the company
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the equipment
+      responses:
+        '200':
+          description: Equipment details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  type:
+                    type: string
+                    example: Safety Equipment
+                  model:
+                    type: string
+                    example: Model-X
+                  name:
+                    type: string
+                    example: Fire Extinguisher
+                  dateInstallation:
+                    type: string
+                    format: date
+                    example: '2023-01-15'
+                  dateVerification:
+                    type: string
+                    format: date
+                    example: '2024-01-15'
+        '403':
+          description: Unauthorized
+        '404':
+          description: Equipment not found
+
+  /equipment/{company_id}/create:
+    post:
+      summary: Create new equipment for a company
+      tags:
+        - Equipment
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - in: path
+          name: company_id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the company
+      requestBody:
+        description: The equipment details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  example: Safety Equipment
+                model:
+                  type: string
+                  example: Model-X
+                name:
+                  type: string
+                  example: Fire Extinguisher
+                dateInstallation:
+                  type: string
+                  format: date
+                  example: '2023-01-15'
+                dateVerification:
+                  type: string
+                  format: date
+                  example: '2024-01-15'
+      responses:
+        '200':
+          description: Equipment created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  type:
+                    type: string
+                    example: Safety Equipment
+                  model:
+                    type: string
+                    example: Model-X
+                  name:
+                    type: string
+                    example: Fire Extinguisher
+                  dateInstallation:
+                    type: string
+                    format: date
+                    example: '2023-01-15'
+                  dateVerification:
+                    type: string
+                    format: date
+                    example: '2024-01-15'
+        '400':
+          description: Missing required fields
+        '403':
+          description: Unauthorized
+        '500':
+          description: Server error
+
+  /equipment/{company_id}/update/{id}:
+    post:
+      summary: Update equipment for a company
+      tags:
+        - Equipment
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - in: path
+          name: company_id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the company
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the equipment to update
+      requestBody:
+        description: The updated equipment details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                model:
+                  type: string
+                  example: Model-Y
+                name:
+                  type: string
+                  example: Updated Fire Extinguisher
+                dateInstallation:
+                  type: string
+                  format: date
+                  example: '2023-02-15'
+                dateVerification:
+                  type: string
+                  format: date
+                  example: '2025-02-15'
+      responses:
+        '200':
+          description: Equipment updated successfully
+        '403':
+          description: Unauthorized
+        '404':
+          description: Equipment or company not found
+
+  /equipment/{company_id}/delete/{id}:
+    post:
+      summary: Delete equipment for a company
+      tags:
+        - Equipment
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - in: path
+          name: company_id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the company
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the equipment to delete
+      responses:
+        '200':
+          description: Equipment deleted successfully
+        '403':
+          description: Unauthorized
+        '404':
+          description: Equipment or company not found
+  /first-aid/{company_id}/get-all:
+    get:
+      summary: Get all first aid kits for a company
+      tags:
+        - First Aid Kit
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - in: path
+          name: company_id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the company
+      responses:
+        '200':
+          description: List of first aid kits
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: Basic First Aid Kit
+                    company_id:
+                      type: integer
+                      example: 10
+        '403':
+          description: Unauthorized
+        '404':
+          description: No first aid kits or company found
+
+  /first-aid/{company_id}/get/{id}:
+    get:
+      summary: Get a specific first aid kit for a company
+      tags:
+        - First Aid Kit
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - in: path
+          name: company_id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the company
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the first aid kit
+      responses:
+        '200':
+          description: First aid kit details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Basic First Aid Kit
+                  company_id:
+                    type: integer
+                    example: 10
+        '403':
+          description: Unauthorized
+        '404':
+          description: First aid kit not found
+
+  /first-aid/{company_id}/create:
+    post:
+      summary: Create a new first aid kit for a company
+      tags:
+        - First Aid Kit
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - in: path
+          name: company_id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the company
+      requestBody:
+        description: The first aid kit details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Basic First Aid Kit
+      responses:
+        '200':
+          description: First aid kit created
+        '400':
+          description: Missing required fields
+        '403':
+          description: Unauthorized
+        '404':
+          description: Company not found
+        '500':
+          description: Server error
+
+  /first-aid/{company_id}/create/{id}/item:
+    post:
+      summary: Create an item in a specific first aid kit
+      tags:
+        - First Aid Kit Item
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - in: path
+          name: company_id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the company
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the first aid kit
+      requestBody:
+        description: The first aid kit item details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Bandage
+                link:
+                  type: string
+                  example: https://www.medicalsupplies.com/bandage
+      responses:
+        '200':
+          description: First aid kit item created
+        '400':
+          description: Missing required fields
+        '403':
+          description: Unauthorized
+        '404':
+          description: First aid kit or company not found
+        '500':
+          description: Server error
+
+  /first-aid/{company_id}/update/{kitId}/item/{itemId}:
+    post:
+      summary: Update an item in a first aid kit
+      tags:
+        - First Aid Kit Item
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - in: path
+          name: company_id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the company
+        - in: path
+          name: kitId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the first aid kit
+        - in: path
+          name: itemId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the item
+      requestBody:
+        description: The updated first aid kit item details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Updated Bandage
+                link:
+                  type: string
+                  example: https://www.medicalsupplies.com/updated-bandage
+      responses:
+        '200':
+          description: First aid kit item updated successfully
+        '403':
+          description: Unauthorized
+        '404':
+          description: First aid kit item or company not found
+
+  /first-aid/{company_id}/delete/{kitId}/item/{itemId}:
+    post:
+      summary: Delete an item from a first aid kit
+      tags:
+        - First Aid Kit Item
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - in: path
+          name: company_id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the company
+        - in: path
+          name: kitId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the first aid kit
+        - in: path
+          name: itemId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the item to delete
+      responses:
+        '200':
+          description: First aid kit item deleted successfully
+        '403':
+          description: Unauthorized
+        '404':
+          description: First aid kit item or company not found
+
