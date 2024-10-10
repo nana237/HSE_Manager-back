@@ -42,5 +42,6 @@ Certificate.init(
 );
 
 Certificate.belongsTo(Company, {foreignKey: 'company_id'});
+Company.hasMany(Certificate, {foreignKey: 'company_id'});
 
 module.exports = Certificate;

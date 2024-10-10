@@ -29,5 +29,6 @@ FirstAidKit.init(
 );
 
 FirstAidKit.belongsTo(Company, { foreignKey: 'company_id' });
+Company.hasMany(FirstAidKit, {foreignKey: 'company_id'});
 
 module.exports = FirstAidKit;

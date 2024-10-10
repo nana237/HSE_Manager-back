@@ -28,6 +28,6 @@ Contains.init(
 );
 
 FirstAidKitItem.belongsToMany(FirstAidKit, { through: Contains });
-FirstAidKit.belongsToMany(FirstAidKitItem, { through: Contains }); // Doesn't delete on cascade ?
+FirstAidKit.belongsToMany(FirstAidKitItem, {through: Contains});
 
 module.exports = Contains;
