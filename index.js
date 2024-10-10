@@ -10,10 +10,19 @@ const fs = require('fs');
 const YAML = require('yaml');
 const swaggerDocument = YAML.parse(fs.readFileSync('Documentation/swagger.yaml', 'utf8'));
 
+const cors = require('cors');
+
+
 require('dotenv').config();
 
 const app = express();
 const port = 3000;
+
+
+app.use(cors({
+    origin: 'http://localhost:8080'
+  }));
+  
 
 app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
