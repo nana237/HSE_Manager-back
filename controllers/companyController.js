@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Company = require('../models/Company');
+const authenticateToken = require("../middleware/authMiddleware");
 
 exports.createCompany = async (req, res) => {
     try {
@@ -19,30 +20,46 @@ exports.getCompanies = async (req, res) => {
     companies ? res.json(companies) : res.status(404).send('Company not found');
 };
 
-exports.updateCompany = async (req, res) => {
-    const {id} = req.params;
-    const {name, mail, password, nb_employees} = req.body;
-    const company = await Company.findByPk(id);
+exports.updateCompany = [
+    authenticateToken,
+    async (req, res) => {
+        const {id} = req.params;
+        const {name, mail, password, nb_employees} = req.body;
+        const company = await Company.findByPk(id);
 
-    if (company) {
-        await company.update({name, mail, password, nb_employees});
-        res.json(company);
-    } else {
-        res.status(404).send('Company not found');
+        if (company) {
+            await company.update({name, mail, password, nb_employees});
+            res.json(company);
+        } else {
+            res.status(404).send('Company not found');
+        }
     }
-};
+];
 
 exports.loginCompany = async (req, res) => {
-    const {email, password} = req.body;
-    const company = await Company.findByPk(email);
+    const {mail, password} = req.body;
 
-    if (!company) {
-        return res.status(400).send('Invalid email');
+    try {
+        const company = await Company.findOne({where: {mail: mail}});
+
+        if (!company) {
+            return res.status(400).json({error: 'Invalid email'});
+        }
+
+        const isMatch = await bcrypt.compare(password, company.password);
+        if (!isMatch) {
+            return res.status(400).json({error: 'Invalid password'});
+        }
+
+        const token = jwt.sign(
+            {id: company.id},
+            process.env.SECRET,
+            {expiresIn: '1h'}
+        );
+
+        res.json({token});
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({error: 'Server error'});
     }
-
-    const isMatch = await bcrypt.compare(password, company.password);
-    if (!isMatch) return res.status(400).send('Invalid password');
-
-    const token = jwt.sign({id: company.id}, process.env.SECRET, {expiresIn: '1h'});
-    res.json({token});
 };

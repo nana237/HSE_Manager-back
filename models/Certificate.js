@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require('sequelize');
+const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/sequelize');
 const Company = require('../models/Company');
 
@@ -42,5 +42,6 @@ Certificate.init(
 );
 
 Certificate.belongsTo(Company, {foreignKey: 'company_id'});
+Company.hasMany(Certificate, {foreignKey: 'company_id'});
 
 module.exports = Certificate;

@@ -1,10 +1,11 @@
 const express = require('express');
 const sequelize = require('./config/sequelize');
-
 const companyRoutes = require('./routes/companyRoutes');
 const equipmentRoutes = require('./routes/equipmentRoutes');
 const firstAidRoutes = require('./routes/firstAidKitRoutes');
 const certificateRoutes = require('./routes/certificateRoutes');
+const alertRoutes = require('./routes/alertRoutes');
+require('dotenv').config();
 
 const app = express();
 const port = 3000;
@@ -26,10 +27,11 @@ app.use('/company', companyRoutes);
 app.use('/equipment', equipmentRoutes);
 app.use('/first-aid', firstAidRoutes);
 app.use('/certificate', certificateRoutes);
+app.use('/alert', alertRoutes);
 
 app.listen(port, async () => {
     try {
-        await sequelize.sync({force: false});
+        await sequelize.sync({force: false, alter: true});
         console.log('Database synced successfully');
         console.log(`Server running on http://localhost:${port}`);
     } catch (error) {

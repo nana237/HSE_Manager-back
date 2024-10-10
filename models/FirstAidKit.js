@@ -1,8 +1,9 @@
-const { Model, DataTypes } = require('sequelize');
+const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/sequelize');
 const Company = require("./Company");
 
-class FirstAidKit extends Model {}
+class FirstAidKit extends Model {
+}
 
 FirstAidKit.init(
     {
@@ -28,6 +29,7 @@ FirstAidKit.init(
     }
 );
 
-FirstAidKit.belongsTo(Company, { foreignKey: 'company_id' });
+FirstAidKit.belongsTo(Company, {foreignKey: 'company_id'});
+Company.hasMany(FirstAidKit, {foreignKey: 'company_id'});
 
 module.exports = FirstAidKit;

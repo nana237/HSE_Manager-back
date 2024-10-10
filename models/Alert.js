@@ -1,8 +1,9 @@
-const { Model, DataTypes } = require('sequelize');
+const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/sequelize');
 const Company = require("./Company");
 
-class Alert extends Model {}
+class Alert extends Model {
+}
 
 Alert.init(
     {
@@ -11,6 +12,19 @@ Alert.init(
             primaryKey: true,
             defaultValue: DataTypes.UUIDV4,
         },
+        company_id: {
+            type: DataTypes.UUID,
+            allowNull: false,
+        },
+        message: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        level: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            default: 0
+        }
     },
     {
         sequelize,
@@ -21,5 +35,6 @@ Alert.init(
 );
 
 Alert.belongsTo(Company, {foreignKey: 'company_id'});
+Company.hasMany(Alert, {foreignKey: 'company_id'});
 
 module.exports = Alert;

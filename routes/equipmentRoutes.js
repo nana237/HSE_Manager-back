@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const equipmentController = require('../controllers/equipmentController');
+const authenticateToken = require('../middleware/authMiddleware');
 
-router.get('/get-all', equipmentController.getAllEquipment);
-router.get('/:company_id/get/:id', equipmentController.getEquipment);
-router.post('/:company_id/create', equipmentController.createEquipment);
-router.post('/:company_id/update/:id', equipmentController.updateEquipment);
-router.post('/delete/:id', equipmentController.deleteEquipment);
+router.get('/:company_id/get-all', authenticateToken, equipmentController.getAllEquipment);
+router.get('/:company_id/get/:id', authenticateToken, equipmentController.getEquipment);
+router.post('/:company_id/create', authenticateToken, equipmentController.createEquipment);
+router.post('/:company_id/update/:id', authenticateToken, equipmentController.updateEquipment);
+router.post('/:company_id/delete/:id', authenticateToken, equipmentController.deleteEquipment);
 
 module.exports = router;

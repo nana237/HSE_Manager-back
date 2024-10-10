@@ -46,5 +46,6 @@ Equipment.init(
 );
 
 Equipment.belongsTo(Company, {foreignKey: 'company_id'});
+Company.hasMany(Equipment, {foreignKey: 'company_id'});
 
 module.exports = Equipment;
