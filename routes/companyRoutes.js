@@ -5,7 +5,7 @@ const authenticateToken = require("../middleware/authMiddleware");
 
 router.post('/create', companyController.createCompany);
 router.get('/get', companyController.getCompanies);
-router.post('/update/:id', authenticateToken, companyController.updateCompany);
+router.put('/update/:id', authenticateToken, companyController.updateCompany);
 router.post('/login', companyController.loginCompany);
 
 module.exports = router;
