@@ -15,4 +15,5 @@ pnpm-debug.log*
 .vscode
 *.iml
 *.xml
+.env
 
