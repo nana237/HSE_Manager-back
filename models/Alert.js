@@ -1,8 +1,9 @@
-const { Model, DataTypes } = require('sequelize');
+const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/sequelize');
 const Company = require("./Company");
 
-class Alert extends Model {}
+class Alert extends Model {
+}
 
 Alert.init(
     {

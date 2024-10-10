@@ -1,83 +1,138 @@
 const Equipment = require('../models/Equipment');
 const Company = require('../models/Company');
+const authenticateToken = require('../middleware/authMiddleware');
 
-exports.getAllEquipment = async (req, res) => {
-    const {company_id} = req.params;
-    const company = await Company.findByPk(company_id);
+// Get all equipment for a company
+exports.getAllEquipment = [
+    authenticateToken,
+    async (req, res) => {
+        const {company_id} = req.params;
 
-    if (!company) {
-        return res.status(400).send({error: 'No company found with this id'});
+        if (req.user.id !== company_id) {
+            return res.status(403).send({error: 'Unauthorized'});
+        }
+
+        const company = await Company.findByPk(company_id);
+
+        if (!company) {
+            return res.status(400).send({error: 'No company found with this id'});
+        }
+
+        const equipments = await Equipment.findAll({where: {company_id}});
+        res.json(equipments);
     }
+];
 
-    const equipments = await Equipment.findAll({where: {company_id: company_id}})
-    res.json(equipments);
-};
+// Get specific equipment for a company
+exports.getEquipment = [
+    authenticateToken,
+    async (req, res) => {
+        const {company_id, id} = req.params;
 
-exports.getEquipment = async (req, res) => {
-    const {company_id, id} = req.params;
-    const company = await Company.findByPk(company_id);
+        if (req.user.id !== company_id) {
+            return res.status(403).send({error: 'Unauthorized'});
+        }
 
-    if (!company) {
-        return res.status(404).send('Company not found');
+        const company = await Company.findByPk(company_id);
+
+        if (!company) {
+            return res.status(404).send('Company not found');
+        }
+
+        const equipment = await Equipment.findOne({
+            where: {id, company_id}
+        });
+
+        equipment ? res.json(equipment) : res.status(404).send('Equipment not found');
     }
+];
 
-    const equipment = await Equipment.findOne({
-        where: {id: id, company_id: company_id},
-    });
+// Create new equipment for a company
+exports.createEquipment = [
+    authenticateToken,
+    async (req, res) => {
+        const {company_id} = req.params;
+        const {type, model, name, dateInstallation, dateVerification} = req.body;
 
-    equipment ? res.json(equipment) : res.status(404).send('Equipment not found');
-};
+        if (!type || !model || !name || !dateInstallation || !dateVerification) {
+            return res.status(400).send({error: 'Missing required fields'});
+        }
 
-exports.createEquipment = async (req, res) => {
-    const {company_id} = req.params;
-    const {type, model, name, dateInstallation, dateVerification} = req.body;
+        if (req.user.id !== company_id) {
+            return res.status(403).send({error: 'Unauthorized'});
+        }
 
-    if (!type || !model || !name || !dateInstallation || !dateVerification) {
-        return res.status(400).send({error: 'Missing required fields'});
+        try {
+            const equipment = await Equipment.create({
+                type,
+                company_id,
+                model,
+                name,
+                dateInstallation,
+                dateVerification
+            });
+            res.json(equipment);
+        } catch (error) {
+            res.status(500).send({error: 'Server error'});
+        }
     }
+];
 
-    const equipment = await Equipment.create({type, company_id, model, name, dateInstallation, dateVerification});
+// Update equipment for a company
+exports.updateEquipment = [
+    authenticateToken,
+    async (req, res) => {
+        const {company_id, id} = req.params;
+        const {model, name, dateInstallation, dateVerification} = req.body;
 
-    res.json(equipment);
-};
+        if (req.user.id !== company_id) {
+            return res.status(403).send({error: 'Unauthorized'});
+        }
 
-exports.updateEquipment = async (req, res) => {
-    const {company_id, id} = req.params;
-    const {model, name, dateInstallation, dateVerification} = req.body;
-    const company = await Company.findByPk(company_id);
+        const company = await Company.findByPk(company_id);
 
-    if (!company) {
-        return res.status(404).send('Company not found');
+        if (!company) {
+            return res.status(404).send('Company not found');
+        }
+
+        const equipment = await Equipment.findOne({
+            where: {id, company_id}
+        });
+
+        if (equipment) {
+            await equipment.update({model, name, dateInstallation, dateVerification});
+            res.json(equipment);
+        } else {
+            res.status(404).send('Equipment not found');
+        }
     }
+];
 
-    const equipment = await Equipment.findOne({
-        where: {id: id, company_id: company_id},
-    })
+// Delete equipment for a company
+exports.deleteEquipment = [
+    authenticateToken,
+    async (req, res) => {
+        const {company_id, id} = req.params;
 
-    if (equipment) {
-        await equipment.update({model, name, dateInstallation, dateVerification});
-        res.json(equipment);
-    } else {
-        res.status(404).send('Equipment not found');
+        if (req.user.id !== company_id) {
+            return res.status(403).send({error: 'Unauthorized'});
+        }
+
+        const company = await Company.findByPk(company_id);
+
+        if (!company) {
+            return res.status(404).send('Company not found');
+        }
+
+        const equipment = await Equipment.findOne({
+            where: {id, company_id}
+        });
+
+        if (equipment) {
+            await equipment.destroy();
+            res.status(200).send('Equipment deleted');
+        } else {
+            res.status(404).send('Equipment not found');
+        }
     }
-};
-
-exports.deleteEquipment = async (req, res) => {
-    const {company_id, id} = req.params;
-    const company = await Company.findByPk(company_id);
-
-    if (!company) {
-        return res.status(404).send('Company not found');
-    }
-
-    const equipment = await Equipment.findOne({
-        where: {id: id, company_id: company_id},
-    })
-
-    if (equipment) {
-        await equipment.destroy();
-        res.status(200).send('Equipment deleted');
-    } else {
-        res.status(404).send('Equipment not found');
-    }
-};
+];

@@ -1,8 +1,9 @@
-const { DataTypes, Model} = require('sequelize');
+const {DataTypes, Model} = require('sequelize');
 const sequelize = require('../config/sequelize');
 const FirstAidKit = require('./FirstAidKit');
 
-class FirstAidKitItem extends Model {}
+class FirstAidKitItem extends Model {
+}
 
 FirstAidKitItem.init(
     {
@@ -28,7 +29,7 @@ FirstAidKitItem.init(
     }
 );
 
-FirstAidKitItem.belongsToMany(FirstAidKit, { through: 'Contains' });
-FirstAidKit.hasMany(FirstAidKitItem, { foreignKey: 'kitId', onDelete: 'CASCADE' });
+FirstAidKitItem.belongsToMany(FirstAidKit, {through: 'Contains'});
+FirstAidKit.hasMany(FirstAidKitItem, {foreignKey: 'kitId', onDelete: 'CASCADE'});
 
 module.exports = FirstAidKitItem;

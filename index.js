@@ -1,11 +1,11 @@
 const express = require('express');
 const sequelize = require('./config/sequelize');
-
 const companyRoutes = require('./routes/companyRoutes');
 const equipmentRoutes = require('./routes/equipmentRoutes');
 const firstAidRoutes = require('./routes/firstAidKitRoutes');
 const certificateRoutes = require('./routes/certificateRoutes');
 const alertRoutes = require('./routes/alertRoutes');
+require('dotenv').config();
 
 const app = express();
 const port = 3000;

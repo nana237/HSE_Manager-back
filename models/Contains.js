@@ -27,7 +27,7 @@ Contains.init(
     }
 );
 
-FirstAidKitItem.belongsToMany(FirstAidKit, { through: Contains });
+FirstAidKitItem.belongsToMany(FirstAidKit, {through: Contains});
 FirstAidKit.belongsToMany(FirstAidKitItem, {through: Contains});
 
 module.exports = Contains;
